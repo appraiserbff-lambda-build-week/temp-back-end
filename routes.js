@@ -37,10 +37,10 @@ router.post("/login", async ({ body: { username, password } }, res, next) => {
   }
 });
 
-router.post("/logout", validate, async ({ body: { token } }, res, next) => {
+router.post("/logout", validate, async (req, res, next) => {
   try {
-    await user.logout(token);
-    res.send();
+    await user.logout(req.user);
+    res.json({ status: "ok" });
   } catch (e) {
     next(e);
   }

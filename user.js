@@ -46,7 +46,10 @@ module.exports = {
     throw new Error("Invalid password");
   },
 
-  logout: async ({ token }) => {},
+  logout: async userID => {
+    const db = await dbPromise;
+    await db.run(sql`DELETE FROM sessions WHERE user = ${userID}`);
+  },
 
   getAllProperties: async userID => {
     const db = await dbPromise;
