@@ -1,6 +1,12 @@
 -- Up
 
-CREATE TABLE users (id INTEGER PRIMARY KEY, username TEXT UNIQUE, password TEXT, organization TEXT, widgets TEXT);
+CREATE TABLE users (
+  id INTEGER PRIMARY KEY,
+  username TEXT UNIQUE,
+  password TEXT,
+  organization TEXT,
+  widgets TEXT NOT NULL DEFAULT ''
+);
 CREATE TABLE properties (
   id INTEGER PRIMARY KEY,
   address TEXT,
