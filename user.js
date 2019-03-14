@@ -38,7 +38,7 @@ module.exports = {
         user: {
           username: ret.username,
           organization: ret.organization,
-          widgets: ret.widgets.split("|")
+          widgets: ret.widgets.split("|").filter(Boolean)
         }
       };
     }
