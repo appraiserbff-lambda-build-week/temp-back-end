@@ -67,7 +67,9 @@ router.post("/properties", validate, async (req, res, next) => {
     properties = await Promise.all(
       properties.map(async property => {
         try {
-          const zestimate = await estimate(property);
+          const zestimate = property.yearAssessed // if year exists
+            ? await estimate(property) 
+            : await altEstimate(property);
           property.zestimate = parseInt(zestimate.replace("$", ""), 10);
         } catch (e) {
           console.log(e);

@@ -26,12 +26,12 @@ module.exports = {
   altEstimate: async property => {
     const you_will_conform = {
       year_assessment: property.yearAssessed,
-      land_use_type: 31,
+      land_use_type: property.type || 31,
       beds: property.bedrooms,
       baths: property.bathrooms,
       total_rooms: property.rooms,
       zip: property.zipcode,
-      assessed_property_taxes: property.taxes || ,
+      assessed_property_taxes: property.taxes,
       year_built: new Date().getFullYear() - property.age,
       sqft_house: property.sqFt
     };
