@@ -3,6 +3,7 @@ const router = express.Router();
 
 const user = require("./user.js");
 const validate = require("./validate.js");
+const estimate = require("./price-estimator.js");
 
 router.get("/", async (req, res) => {
   res.send("I am alive");
@@ -56,7 +57,20 @@ router.post("/properties/add", validate, async (req, res, next) => {
 
 router.post("/properties", validate, async (req, res, next) => {
   try {
-    const properties = await user.getAllProperties(req.user);
+    let properties = await user.getAllProperties(req.user);
+
+    properties = await Promise.all(
+      properties.map(async property => {
+        try {
+          const zestimate = await estimate(property);
+          property.zestimate = parseInt(zestimate.replace("$", ""), 10);
+        } catch (e) {
+          console.log(e);
+        }
+
+        return property;
+      })
+    );
     res.json(properties);
   } catch (e) {
     next(e);

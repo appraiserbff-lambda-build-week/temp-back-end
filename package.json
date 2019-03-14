@@ -12,8 +12,10 @@
     "bcrypt": "^3.0.4",
     "bluebird": "^3.5.3",
     "body-parser": "^1.18.3",
+    "cheerio": "^1.0.0-rc.2",
     "express": "^4.16.4",
     "prettier": "^1.16.4",
+    "request-promise": "^4.2.4",
     "sql-template-strings": "^2.2.2",
     "sqlite": "^3.0.2"
   }
