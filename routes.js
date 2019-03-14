@@ -3,7 +3,12 @@ const router = express.Router();
 
 const user = require("./user.js");
 const validate = require("./validate.js");
-const estimate = require("./price-estimator.js");
+const { estimate, altEstimate } = require("./price-estimator.js");
+
+/* TO DO: 
+  update account settings: username, password, organization
+  delete a property by id
+*/
 
 router.get("/", async (req, res) => {
   res.send("I am alive");
