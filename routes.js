@@ -18,7 +18,7 @@ router.post(
         password,
         organization
       });
-      res.send("OK");
+      res.json({ status: "ok" });
     } catch (e) {
       next(e);
     }
@@ -27,11 +27,11 @@ router.post(
 
 router.post("/login", async ({ body: { username, password } }, res, next) => {
   try {
-    const token = await user.login({
+    const userData = await user.login({
       username,
       password
     });
-    res.json({ token });
+    res.json(userData);
   } catch (e) {
     next(e);
   }
@@ -72,6 +72,15 @@ router.post("/properties", validate, async (req, res, next) => {
       })
     );
     res.json(properties);
+  } catch (e) {
+    next(e);
+  }
+});
+
+router.post("/user/update-widgets", validate, async (req, res, next) => {
+  try {
+    await user.updateWidgets(req.user, req.body.widgets);
+    res.json({ status: "ok" });
   } catch (e) {
     next(e);
   }

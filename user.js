@@ -16,7 +16,7 @@ module.exports = {
   login: async ({ username, password }) => {
     const db = await dbPromise;
     const ret = await db.get(
-      sql`SELECT id, password FROM users WHERE username = ${username}`
+      sql`SELECT * FROM users WHERE username = ${username}`
     );
     if (ret == null) {
       throw new Error("Invalid username");
@@ -33,7 +33,14 @@ module.exports = {
         ${token},
         ${id}
       )`);
-      return token;
+      return {
+        token,
+        user: {
+          username: ret.username,
+          organization: ret.organization,
+          widgets: ret.widgets.split("|")
+        }
+      };
     }
 
     throw new Error("Invalid password");
@@ -96,5 +103,13 @@ module.exports = {
     }
 
     return ret.lastID;
+  },
+
+  updateWidgets: async (userID, widgets) => {
+    const db = await dbPromise;
+    const widgetString = widgets.join("|");
+    await db.run(
+      sql`UPDATE users SET widgets = ${widgetString} WHERE id = ${userID}`
+    );
   }
 };
